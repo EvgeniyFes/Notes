@@ -2,7 +2,7 @@
 //  NoteImage.m
 //  Notes
 //
-//  Created by Евгений Фесь on 23.07.16.
+//  Created by Евгений Фесь on 25.07.16.
 //  Copyright © 2016 AM. All rights reserved.
 //
 
@@ -10,9 +10,6 @@
 
 @implementation NoteImage
 
-@synthesize imageUrl;
-
-@synthesize identifier;
-@synthesize parentID;
+// Insert code here to add functionality to your managed object subclass
 
 @end

@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Note.h"
 #import "NoteModel.h"
+#import "ScrollWithImages.h"
 
-@interface DetailNoteViewController : UIViewController<UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate>
+@interface DetailNoteViewController : UIViewController<UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, ScrollWithImagesDelegate>
 
 @property Note* selectedNote;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIView *viewForScrollView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *viewWithBtns;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBtn;

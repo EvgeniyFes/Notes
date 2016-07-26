@@ -9,20 +9,20 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "Note.h"
-#import "NoteImage.h"
+#import "Note+CoreDataProperties.h"
+#import "NoteImage+CoreDataProperties.h"
 
 @interface NoteModel : NSObject
 
 + (id)sharedInstance;
 
 - (NSArray*)allNotes;
-- (Note*)addNewNoteWithTitle:(NSString*)title withTextNote:(NSString*)text andImages:(NSArray*)imagesArray;
-- (void)editNoteWithTitle:(NSString*)title withTextNote:(NSString*)text andIndex:(NSInteger)index;
+- (Note*)addNewNoteWithTitle:(NSString*)title withTextNote:(NSString*)text;
+- (void)editNoteWithTitle:(NSString*)title withTextNote:(NSString*)text andNote:(Note*)editNote;
 
-- (NSArray*)noteImages;
+- (NSMutableArray*)imagesForNote:(Note*)note;
 - (void)addImage:(NSDictionary*)imageData toNote:(Note*)note;
-- (void)removeFromNote:(Note*)note imageWithUrl:(NSString*)url;
+- (void)removeFromNote:(Note*)note imageWithIndex:(NSInteger)index;
 
 
 - (void)removeNote:(Note*)note;

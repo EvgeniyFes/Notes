@@ -11,6 +11,8 @@
 @implementation DetailNoteViewController{
     NoteModel* sharedModel;
     UIImagePickerController *picker;
+    NSMutableArray* allImages;
+    ScrollWithImages* scrollImage;
 }
 
 @synthesize selectedNote;
@@ -19,9 +21,15 @@
     [super viewDidLoad];
     _btnPhoto.imageView.contentMode = UIViewContentModeScaleAspectFit;
     _btnRemove.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    allImages = [[NSMutableArray alloc] init];
     
     _doneBtn.enabled = NO;
     sharedModel = [NoteModel sharedInstance];
+    
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    scrollImage = [[ScrollWithImages alloc] initWithFrame:CGRectMake(0, 0, screenSize.width, 100)];
+    scrollImage.delegate = self;
+    [_viewForScrollView addSubview:scrollImage];
     
     self.title = @"New Note";
     if(selectedNote != nil){
@@ -29,10 +37,13 @@
         _noteName.text = selectedNote.name;
         _noteText.text = selectedNote.text;
         [self showCorrectData];
+        allImages = [sharedModel imagesForNote:selectedNote];
+        [scrollImage showImages:allImages];
     }else{
         [_noteName becomeFirstResponder];
         _lblDate.text = [DetailNoteViewController correctFormatForDate:[NSDate date]];
     }
+    _viewHeightConstraint.constant = (allImages.count > 0) ? 100 : 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardVisible:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardDidHideNotification object:nil];
@@ -74,10 +85,10 @@
     CGRect rawFrame = [value CGRectValue];
     CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
     
-    _scrollViewHeightConstraint.constant = keyboardFrame.size.height - _viewWithBtns.frame.size.height;
+    _viewHeightConstraint.constant = keyboardFrame.size.height - _viewWithBtns.frame.size.height;
 }
 - (void)keyboardHidden:(NSNotification*)notification{
-    _scrollViewHeightConstraint.constant = 0;
+    _viewHeightConstraint.constant = 0;
 }
 
 
@@ -96,7 +107,6 @@
     UIAlertController* photoAlert = [UIAlertController alertControllerWithTitle:@"Add photo from:" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction* btnGallery = [UIAlertAction actionWithTitle:@"Gallery" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action){
-        NSLog(@"btnGellery picked");
         picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
         [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
@@ -104,7 +114,6 @@
     }];
     
     UIAlertAction* btnCamera = [UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action){
-        NSLog(@"btnCamera picked");
         picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
         [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
@@ -123,7 +132,15 @@
 - (void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary*)info{
     UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSString* url = [info objectForKey:UIImagePickerControllerReferenceURL];
-    NSLog(@"url - %@", url);
+    url = @"1";
+    
+    [self saveNote];
+    
+    [sharedModel addImage:@{@"image" : image, @"url" : url} toNote:selectedNote];
+    _viewHeightConstraint.constant = 100;
+    
+    [allImages addObject:image];
+    [scrollImage showImages:allImages];
     
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
@@ -131,17 +148,31 @@
 
 
 - (IBAction)clickDone:(id)sender {
+    [self saveNote];
+}
+
+
+- (void)saveNote{
     _doneBtn.enabled = NO;
     
     if(selectedNote == nil){
-        selectedNote = [sharedModel addNewNoteWithTitle:_noteName.text withTextNote:_noteText.text andImages:@[]];
+        selectedNote = [sharedModel addNewNoteWithTitle:_noteName.text withTextNote:_noteText.text];
         
     }else{
-        [sharedModel editNoteWithTitle:_noteName.text withTextNote:_noteText.text andIndex:[selectedNote.identifier integerValue]];
+        [sharedModel editNoteWithTitle:_noteName.text withTextNote:_noteText.text andNote:selectedNote];
     }
     
     [self showCorrectData];
     [self.view endEditing:YES];
+}
+
+
+#pragma mark ScrollWithImages Delegate
+- (void)removeImageWithIndex:(NSInteger)index{
+    [sharedModel removeFromNote:selectedNote imageWithIndex:index];
+    [allImages removeObjectAtIndex:index];
+    [scrollImage showImages:allImages];
+    _viewHeightConstraint.constant = (allImages.count > 0) ? 100 : 0;
 }
 
 

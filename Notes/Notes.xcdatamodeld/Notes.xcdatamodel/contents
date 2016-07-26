@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
-    <entity name="Note" syncable="YES">
+    <entity name="Note" representedClassName="Note" syncable="YES">
         <attribute name="dateCreate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dateEdit" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="identifier" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="image" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NoteImage" inverseName="parentNote" inverseEntity="NoteImage" syncable="YES"/>
     </entity>
-    <entity name="NoteImage" syncable="YES">
-        <attribute name="identifier" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    <entity name="NoteImage" representedClassName="NoteImage" parentEntity="Note" syncable="YES">
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="parentID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="parentNote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="image" inverseEntity="Note" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Note" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="NoteImage" positionX="-63" positionY="36" width="128" height="90"/>
+        <element name="Note" positionX="-81" positionY="-54" width="128" height="118"/>
+        <element name="NoteImage" positionX="162" positionY="-45" width="128" height="73"/>
     </elements>
 </model>

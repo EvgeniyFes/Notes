@@ -77,15 +77,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Weg-KS-2ta">
-                                <rect key="frame" x="0.0" y="560" width="600" height="0.0"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D0I-gP-Q85">
+                                <rect key="frame" x="0.0" y="460" width="600" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="UbF-Y3-SXM"/>
+                                    <constraint firstAttribute="height" constant="100" id="3VX-LP-vf5"/>
                                 </constraints>
-                                <connections>
-                                    <outlet property="delegate" destination="OOC-oe-8gm" id="gos-vH-Yo7"/>
-                                </connections>
-                            </scrollView>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vDO-gV-e0p">
                                 <rect key="frame" x="0.0" y="560" width="600" height="40"/>
                                 <subviews>
@@ -118,7 +116,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zcp-aR-euY">
-                                <rect key="frame" x="0.0" y="64" width="600" height="496"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="396"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Note Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="to6-SO-iby">
                                         <rect key="frame" x="12" y="21" width="576" height="21"/>
@@ -135,7 +133,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sS8-VH-XFm">
-                                        <rect key="frame" x="12" y="50" width="576" height="438"/>
+                                        <rect key="frame" x="12" y="50" width="576" height="338"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -174,15 +172,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="D0I-gP-Q85" firstAttribute="top" secondItem="zcp-aR-euY" secondAttribute="bottom" id="07s-bJ-QZc"/>
                             <constraint firstItem="6cq-eD-9Tr" firstAttribute="top" secondItem="vDO-gV-e0p" secondAttribute="bottom" id="2aJ-Cl-ETu"/>
+                            <constraint firstItem="D0I-gP-Q85" firstAttribute="leading" secondItem="mjV-lM-r9u" secondAttribute="leadingMargin" constant="-20" id="GiJ-Y7-gwC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zcp-aR-euY" secondAttribute="trailing" constant="-20" id="MT3-Qb-w2g"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vDO-gV-e0p" secondAttribute="trailing" constant="-20" id="NTi-tv-0bc"/>
-                            <constraint firstItem="Weg-KS-2ta" firstAttribute="top" secondItem="zcp-aR-euY" secondAttribute="bottom" id="TCN-Jg-nbE"/>
                             <constraint firstItem="zcp-aR-euY" firstAttribute="leading" secondItem="mjV-lM-r9u" secondAttribute="leadingMargin" constant="-20" id="Xba-xu-11G"/>
                             <constraint firstItem="vDO-gV-e0p" firstAttribute="leading" secondItem="mjV-lM-r9u" secondAttribute="leadingMargin" constant="-20" id="e8c-OE-P2R"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Weg-KS-2ta" secondAttribute="trailing" constant="-20" id="jiS-hm-7eh"/>
-                            <constraint firstItem="Weg-KS-2ta" firstAttribute="leading" secondItem="mjV-lM-r9u" secondAttribute="leadingMargin" constant="-20" id="rqJ-OW-gxx"/>
-                            <constraint firstItem="vDO-gV-e0p" firstAttribute="top" secondItem="Weg-KS-2ta" secondAttribute="bottom" id="wsv-Ak-XLa"/>
+                            <constraint firstItem="vDO-gV-e0p" firstAttribute="top" secondItem="D0I-gP-Q85" secondAttribute="bottom" id="ngn-L2-cgx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="D0I-gP-Q85" secondAttribute="trailing" constant="-20" id="pHZ-LH-MaR"/>
                             <constraint firstItem="zcp-aR-euY" firstAttribute="top" secondItem="drP-ER-8Xu" secondAttribute="bottom" id="zQO-OK-D42"/>
                         </constraints>
                     </view>
@@ -200,8 +198,8 @@
                         <outlet property="lblDate" destination="hOB-q3-6Gz" id="bfC-dA-1fV"/>
                         <outlet property="noteName" destination="to6-SO-iby" id="qjn-7O-5cP"/>
                         <outlet property="noteText" destination="sS8-VH-XFm" id="jGp-Nl-heh"/>
-                        <outlet property="scrollView" destination="Weg-KS-2ta" id="a6i-QS-qj2"/>
-                        <outlet property="scrollViewHeightConstraint" destination="UbF-Y3-SXM" id="C91-LI-yQ1"/>
+                        <outlet property="viewForScrollView" destination="D0I-gP-Q85" id="hks-AF-xeM"/>
+                        <outlet property="viewHeightConstraint" destination="3VX-LP-vf5" id="yVO-ig-exc"/>
                         <outlet property="viewWithBtns" destination="vDO-gV-e0p" id="UwZ-Un-JAk"/>
                     </connections>
                 </viewController>

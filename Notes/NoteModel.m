@@ -13,8 +13,7 @@
 @implementation NoteModel{
     NSManagedObjectContext *context;
     NSMutableArray* allNotes;
-    
-    NSInteger biggestId;
+    NSMutableArray* allImages;
 }
 
 + (id)sharedInstance{
@@ -33,33 +32,11 @@
     context = [delegate managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Note"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"name != nil"];
+    [request setPredicate:predicate];
     NSError *error = nil;
     
     allNotes = [[NSMutableArray alloc] initWithArray:[context executeFetchRequest:request error:&error]];
-    [self checkForBiggestId];
-}
-
-- (void)checkForBiggestId{
-    biggestId = 0;
-    for(Note* obj in allNotes){
-        NSInteger identifier = [obj.identifier integerValue];
-        biggestId = (biggestId > identifier) ? biggestId : ++identifier;
-    }
-}
-
-- (NSInteger)idForImageInNote:(Note*)note{
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"NoteImage"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier == %li", [note.identifier integerValue]];
-    [request setPredicate:predicate];
-    
-    NSInteger result = 0;
-    NSArray* imagesAtNote = [context executeFetchRequest:request error:nil];
-    for(NoteImage* obj in imagesAtNote){
-        NSInteger identifier = [obj.identifier integerValue];
-        result = (result > identifier) ? result : ++identifier;
-    }
-    
-    return result;
 }
 
 
@@ -68,71 +45,74 @@
     return [allNotes sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortEdit]];
 }
 
-- (NSArray*)noteImages{
-    return @[];
+- (NSMutableArray*)imagesForNote:(Note*)note{
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"NoteImage"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"parentNote == %@", note];
+    [request setPredicate:predicate];
+    
+    NSArray* images = [context executeFetchRequest:request error:nil];
+    NSMutableArray* imagesOriginal = [[NSMutableArray alloc] init];
+    allImages = [[NSMutableArray alloc] init];
+    for(NoteImage* imgNote in images){
+        [allImages addObject:imgNote.imageUrl];
+        [imagesOriginal addObject:[ImageManager getImage:imgNote.imageUrl]];
+    }
+    return imagesOriginal;
 }
 
 
+
 #pragma mark Note Create
-- (Note*)addNewNoteWithTitle:(NSString*)title withTextNote:(NSString*)text andImages:(NSArray*)imagesArray{
+- (Note*)addNewNoteWithTitle:(NSString*)title withTextNote:(NSString*)text{
     Note* newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
-    newNote.identifier = [NSNumber numberWithInteger:biggestId];
     newNote.name = title;
     newNote.text = text;
     newNote.dateCreate = [NSDate date];
     newNote.dateEdit = [NSDate date];
     
-    for(NSDictionary* imageData in imagesArray){
-        [self addImage:imageData toNote:newNote];
-    }
-    
     
     [context save:nil];
     [allNotes addObject:newNote];
-    
-    ++biggestId;
-    
     return newNote;
 }
 
 
 #pragma mark Note Editing
-- (void)editNoteWithTitle:(NSString*)title withTextNote:(NSString*)text andIndex:(NSInteger)index{
-    for(Note* editNote in allNotes){
-        if([editNote.identifier integerValue] == index){
-            editNote.dateEdit = [NSDate date];
-            editNote.name = title;
-            editNote.text = text;
+- (void)editNoteWithTitle:(NSString*)title withTextNote:(NSString*)text andNote:(Note*)editNote{
+    editNote.dateEdit = [NSDate date];
+    editNote.name = title;
+    editNote.text = text;
             
-            [context save:nil];
-        }
-    }
+    [context save:nil];
 }
 
 - (void)addImage:(NSDictionary*)imageData toNote:(Note*)note{
     NoteImage* addImage = [NSEntityDescription insertNewObjectForEntityForName:@"NoteImage" inManagedObjectContext:context];
     addImage.imageUrl = [imageData objectForKey:@"url"];
-    addImage.identifier = [NSNumber numberWithInteger:[self idForImageInNote:note]];
-    addImage.parentID = [NSNumber numberWithInteger:[note.identifier integerValue]];
+    addImage.parentNote = note;
+    
+    [context save:nil];
     
     [ImageManager saveImage:[imageData objectForKey:@"image"] filename:[imageData objectForKey:@"url"]];
-    [context save:nil];
+    [allImages addObject:addImage.imageUrl];
 }
 
 
-- (void)removeFromNote:(Note*)note imageWithUrl:(NSString *)url{
+- (void)removeFromNote:(Note*)note imageWithIndex:(NSInteger)index{
+    NSString* url = allImages[index];
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"NoteImage"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier == %li", [note.identifier integerValue]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"imageUrl == %@", url];
     [request setPredicate:predicate];
     
-    NSArray* imagesAtNote = [context executeFetchRequest:request error:nil];
-    NoteImage* obj = [imagesAtNote firstObject];
+    NoteImage* obj = [[context executeFetchRequest:request error:nil] firstObject];
     [ImageManager removeImage:obj.imageUrl];
     
     [context deleteObject:obj];
     [context save:nil];
+    
+    [allImages removeObjectAtIndex:index];
 }
-
 
 
 
@@ -143,12 +123,11 @@
     [context save:nil];
     
     [allNotes removeObject:note];
-    [self checkForBiggestId];
 }
 
 - (void)removeImagesForNote:(Note*)note{
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"NoteImage"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier == %li", [note.identifier integerValue]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"parentNote == %@", note];
     [request setPredicate:predicate];
     
     NSArray* imagesAtNote = [context executeFetchRequest:request error:nil];
@@ -156,6 +135,7 @@
         [ImageManager removeImage:obj.imageUrl];
         [context deleteObject:obj];
     }
+    [context save:nil];
 }
 
 
@@ -166,14 +146,13 @@
     [allNotes removeAllObjects];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"NoteImage"];
-    NSArray* allImages = [context executeFetchRequest:request error:nil];
-    for(NoteImage* obj in allImages){
+    NSArray* allNotesImages = [context executeFetchRequest:request error:nil];
+    for(NoteImage* obj in allNotesImages){
         [ImageManager removeImage:obj.imageUrl];
         [context deleteObject:obj];
     }
     
     [context save:nil];
-    biggestId = 0;
 }
 
 @end

@@ -84,8 +84,6 @@
 }
 
 
-
-
 - (IBAction)clickEdit:(id)sender {
     _table.editing = !_table.editing;
 }

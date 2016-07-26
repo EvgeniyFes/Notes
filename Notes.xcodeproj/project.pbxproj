@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		506133441D436290004B8871 /* NoteImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 506133431D436290004B8871 /* NoteImage.m */; };
 		506133471D436A15004B8871 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 506133461D436A15004B8871 /* ImageManager.m */; };
+		506133501D4665AE004B8871 /* Note+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 506133491D4665AE004B8871 /* Note+CoreDataProperties.m */; };
+		506133511D4665AE004B8871 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061334B1D4665AE004B8871 /* Note.m */; };
+		506133521D4665AE004B8871 /* NoteImage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061334D1D4665AE004B8871 /* NoteImage+CoreDataProperties.m */; };
+		506133531D4665AE004B8871 /* NoteImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061334F1D4665AE004B8871 /* NoteImage.m */; };
+		506133561D466B5C004B8871 /* ScrollWithImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 506133551D466B5C004B8871 /* ScrollWithImages.m */; };
 		50A21DC71D3D23DE006821DF /* NoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A21DC61D3D23DE006821DF /* NoteModel.m */; };
 		50CEEA681D3A4AD10057D6F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CEEA671D3A4AD10057D6F8 /* main.m */; };
 		50CEEA6B1D3A4AD10057D6F8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CEEA6A1D3A4AD10057D6F8 /* AppDelegate.m */; };
@@ -18,7 +22,6 @@
 		50CEEA761D3A4AD10057D6F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50CEEA751D3A4AD10057D6F8 /* Assets.xcassets */; };
 		50CEEA791D3A4AD10057D6F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CEEA771D3A4AD10057D6F8 /* LaunchScreen.storyboard */; };
 		50CEEA841D3A4AD10057D6F8 /* NotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CEEA831D3A4AD10057D6F8 /* NotesTests.m */; };
-		50CEEA911D3A5DA30057D6F8 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CEEA901D3A5DA30057D6F8 /* Note.m */; };
 		50CEEA951D3A601A0057D6F8 /* DetailNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CEEA941D3A601A0057D6F8 /* DetailNoteViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -33,10 +36,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		506133421D436290004B8871 /* NoteImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteImage.h; sourceTree = "<group>"; };
-		506133431D436290004B8871 /* NoteImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteImage.m; sourceTree = "<group>"; };
 		506133451D436A15004B8871 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
 		506133461D436A15004B8871 /* ImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageManager.m; sourceTree = "<group>"; };
+		506133481D4665AE004B8871 /* Note+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Note+CoreDataProperties.h"; path = "../Note+CoreDataProperties.h"; sourceTree = "<group>"; };
+		506133491D4665AE004B8871 /* Note+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Note+CoreDataProperties.m"; path = "../Note+CoreDataProperties.m"; sourceTree = "<group>"; };
+		5061334A1D4665AE004B8871 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Note.h; path = ../Note.h; sourceTree = "<group>"; };
+		5061334B1D4665AE004B8871 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Note.m; path = ../Note.m; sourceTree = "<group>"; };
+		5061334C1D4665AE004B8871 /* NoteImage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NoteImage+CoreDataProperties.h"; path = "../NoteImage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		5061334D1D4665AE004B8871 /* NoteImage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NoteImage+CoreDataProperties.m"; path = "../NoteImage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		5061334E1D4665AE004B8871 /* NoteImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoteImage.h; path = ../NoteImage.h; sourceTree = "<group>"; };
+		5061334F1D4665AE004B8871 /* NoteImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoteImage.m; path = ../NoteImage.m; sourceTree = "<group>"; };
+		506133541D466B5C004B8871 /* ScrollWithImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollWithImages.h; sourceTree = "<group>"; };
+		506133551D466B5C004B8871 /* ScrollWithImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollWithImages.m; sourceTree = "<group>"; };
 		50A21DC51D3D23DE006821DF /* NoteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteModel.h; sourceTree = "<group>"; };
 		50A21DC61D3D23DE006821DF /* NoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteModel.m; sourceTree = "<group>"; };
 		50CEEA631D3A4AD00057D6F8 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,8 +64,6 @@
 		50CEEA7F1D3A4AD10057D6F8 /* NotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CEEA831D3A4AD10057D6F8 /* NotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotesTests.m; sourceTree = "<group>"; };
 		50CEEA851D3A4AD10057D6F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50CEEA8F1D3A5DA30057D6F8 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		50CEEA901D3A5DA30057D6F8 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		50CEEA931D3A601A0057D6F8 /* DetailNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailNoteViewController.h; sourceTree = "<group>"; };
 		50CEEA941D3A601A0057D6F8 /* DetailNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailNoteViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +86,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		506133571D466B60004B8871 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				506133541D466B5C004B8871 /* ScrollWithImages.h */,
+				506133551D466B5C004B8871 /* ScrollWithImages.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		50A21DC41D3D23B0006821DF /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +130,7 @@
 				50CEEA691D3A4AD10057D6F8 /* AppDelegate.h */,
 				50CEEA6A1D3A4AD10057D6F8 /* AppDelegate.m */,
 				50CEEA8E1D3A5D480057D6F8 /* ManagedObjects */,
+				506133571D466B60004B8871 /* View */,
 				50CEEA921D3A5EB70057D6F8 /* Controllers */,
 				50A21DC41D3D23B0006821DF /* Model */,
 				50CEEA6F1D3A4AD10057D6F8 /* Main.storyboard */,
@@ -144,10 +163,14 @@
 		50CEEA8E1D3A5D480057D6F8 /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				50CEEA8F1D3A5DA30057D6F8 /* Note.h */,
-				50CEEA901D3A5DA30057D6F8 /* Note.m */,
-				506133421D436290004B8871 /* NoteImage.h */,
-				506133431D436290004B8871 /* NoteImage.m */,
+				506133481D4665AE004B8871 /* Note+CoreDataProperties.h */,
+				506133491D4665AE004B8871 /* Note+CoreDataProperties.m */,
+				5061334A1D4665AE004B8871 /* Note.h */,
+				5061334B1D4665AE004B8871 /* Note.m */,
+				5061334C1D4665AE004B8871 /* NoteImage+CoreDataProperties.h */,
+				5061334D1D4665AE004B8871 /* NoteImage+CoreDataProperties.m */,
+				5061334E1D4665AE004B8871 /* NoteImage.h */,
+				5061334F1D4665AE004B8871 /* NoteImage.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -263,15 +286,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50CEEA911D3A5DA30057D6F8 /* Note.m in Sources */,
+				506133511D4665AE004B8871 /* Note.m in Sources */,
 				50CEEA951D3A601A0057D6F8 /* DetailNoteViewController.m in Sources */,
+				506133531D4665AE004B8871 /* NoteImage.m in Sources */,
 				50CEEA6E1D3A4AD10057D6F8 /* ViewController.m in Sources */,
 				506133471D436A15004B8871 /* ImageManager.m in Sources */,
 				50CEEA6B1D3A4AD10057D6F8 /* AppDelegate.m in Sources */,
 				50CEEA681D3A4AD10057D6F8 /* main.m in Sources */,
+				506133501D4665AE004B8871 /* Note+CoreDataProperties.m in Sources */,
 				50CEEA741D3A4AD10057D6F8 /* Notes.xcdatamodeld in Sources */,
 				50A21DC71D3D23DE006821DF /* NoteModel.m in Sources */,
-				506133441D436290004B8871 /* NoteImage.m in Sources */,
+				506133561D466B5C004B8871 /* ScrollWithImages.m in Sources */,
+				506133521D4665AE004B8871 /* NoteImage+CoreDataProperties.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
