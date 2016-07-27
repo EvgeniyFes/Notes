@@ -12,6 +12,7 @@
 
 + (void)saveImage:(UIImage *)image filename:(NSString *)filename{
     filename = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@", filename];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
 //        filename = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@", filename];
         NSData * data = UIImagePNGRepresentation(image);

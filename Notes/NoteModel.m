@@ -13,7 +13,8 @@
 @implementation NoteModel{
     NSManagedObjectContext *context;
     NSMutableArray* allNotes;
-    NSMutableArray* allImagesID;
+    NSMutableArray* allImageID;
+    NSMutableArray* imageIDforCurrNote;
 }
 
 + (id)sharedInstance{
@@ -37,6 +38,12 @@
     NSError *error = nil;
     
     allNotes = [[NSMutableArray alloc] initWithArray:[context executeFetchRequest:request error:&error]];
+    allImageID = [[NSMutableArray alloc] init];
+    
+    request = [[NSFetchRequest alloc] initWithEntityName:@"NoteImage"];
+    NSArray* allImages = [[NSMutableArray alloc] initWithArray:[context executeFetchRequest:request error:nil]];
+    for(NoteImage* img in allImages)
+        [allImageID addObject:img.imageID];
 }
 
 
@@ -52,9 +59,10 @@
     
     NSArray* images = [context executeFetchRequest:request error:nil];
     NSMutableArray* imagesOriginal = [[NSMutableArray alloc] init];
-    allImagesID = [[NSMutableArray alloc] init];
+    imageIDforCurrNote = [[NSMutableArray alloc] init];
+    
     for(NoteImage* imgNote in images){
-        [allImagesID addObject:imgNote.imageID];
+        [imageIDforCurrNote addObject:imgNote.imageID];
         [imagesOriginal addObject:[ImageManager getImage:[imgNote.imageID stringValue]]];
     }
     return imagesOriginal;
@@ -79,23 +87,21 @@
 - (void)addImage:(UIImage*)image toNote:(Note*)note{
     NoteImage* addImage = [NSEntityDescription insertNewObjectForEntityForName:@"NoteImage" inManagedObjectContext:context];
     
-    addImage.imageID = [self specialImageName];
+    addImage.imageID = [self specialImageID];
     addImage.parentNote = note;
     
     [context save:nil];
     
     [ImageManager saveImage:image filename:[addImage.imageID stringValue]];
-    [allImagesID addObject:addImage.imageID];
+    [imageIDforCurrNote addObject:addImage.imageID];
+    [allImageID addObject:addImage.imageID];
 }
 
-- (NSNumber*)specialImageName{
-    NSNumber* randNum;
-    do{
-        NSInteger randomNum = arc4random();
-        randNum = [NSNumber numberWithInteger:randomNum];
-    }while([allImagesID containsObject:randNum]);
-    
-    return randNum;
+- (NSNumber*)specialImageID{
+    NSInteger maxNumber = [[allImageID valueForKeyPath:@"@max.intValue"] integerValue];
+    NSNumber* nextImageID = [NSNumber numberWithInteger:++maxNumber];
+
+    return nextImageID;
 }
 
 
@@ -120,7 +126,7 @@
 }
 
 - (void)removeFromNote:(Note*)note imageWithIndex:(NSInteger)index{
-    NSNumber* imgID = allImagesID[index];
+    NSNumber* imgID = imageIDforCurrNote[index];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"NoteImage"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"imageID == %@", imgID];
@@ -132,7 +138,8 @@
     [context deleteObject:obj];
     [context save:nil];
     
-    [allImagesID removeObjectAtIndex:index];
+    [imageIDforCurrNote removeObjectAtIndex:index];
+    [allImageID removeObjectAtIndex:index];
 }
 
 - (void)removeImagesForNote:(Note*)note{
@@ -154,6 +161,7 @@
         [context deleteObject:obj];
     
     [allNotes removeAllObjects];
+    [allImageID removeAllObjects];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"NoteImage"];
     NSArray* allNotesImages = [context executeFetchRequest:request error:nil];
