@@ -11,6 +11,7 @@
 #import <CoreData/CoreData.h>
 #import "Note+CoreDataProperties.h"
 #import "NoteImage+CoreDataProperties.h"
+#import <UIKit/UIKit.h>
 
 @interface NoteModel : NSObject
 
@@ -21,7 +22,7 @@
 - (void)editNoteWithTitle:(NSString*)title withTextNote:(NSString*)text andNote:(Note*)editNote;
 
 - (NSMutableArray*)imagesForNote:(Note*)note;
-- (void)addImage:(NSDictionary*)imageData toNote:(Note*)note;
+- (void)addImage:(UIImage*)image toNote:(Note*)note;
 - (void)removeFromNote:(Note*)note imageWithIndex:(NSInteger)index;
 
 

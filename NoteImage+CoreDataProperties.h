@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NoteImage (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *imageUrl;
+@property (nullable, nonatomic, retain) NSNumber *imageID;
 @property (nullable, nonatomic, retain) Note *parentNote;
 
 @end

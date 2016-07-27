@@ -8,11 +8,11 @@
         <relationship name="image" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NoteImage" inverseName="parentNote" inverseEntity="NoteImage" syncable="YES"/>
     </entity>
     <entity name="NoteImage" representedClassName="NoteImage" parentEntity="Note" syncable="YES">
-        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageID" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
         <relationship name="parentNote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="image" inverseEntity="Note" syncable="YES"/>
     </entity>
     <elements>
         <element name="Note" positionX="-81" positionY="-54" width="128" height="118"/>
-        <element name="NoteImage" positionX="162" positionY="-45" width="128" height="73"/>
+        <element name="NoteImage" positionX="162" positionY="-45" width="128" height="75"/>
     </elements>
 </model>

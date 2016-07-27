@@ -11,7 +11,7 @@
 #import "NoteModel.h"
 #import "ScrollWithImages.h"
 
-@interface DetailNoteViewController : UIViewController<UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, ScrollWithImagesDelegate>
+@interface DetailNoteViewController : UIViewController<UIScrollViewDelegate, UITextViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, ScrollImagesDelegate, UINavigationControllerDelegate>
 
 @property Note* selectedNote;
 

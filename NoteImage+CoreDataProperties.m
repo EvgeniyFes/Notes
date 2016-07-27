@@ -13,7 +13,7 @@
 
 @implementation NoteImage (CoreDataProperties)
 
-@dynamic imageUrl;
+@dynamic imageID;
 @dynamic parentNote;
 
 @end

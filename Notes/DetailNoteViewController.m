@@ -8,6 +8,7 @@
 
 #import "DetailNoteViewController.h"
 
+
 @implementation DetailNoteViewController{
     NoteModel* sharedModel;
     UIImagePickerController *picker;
@@ -88,7 +89,7 @@
     _viewHeightConstraint.constant = keyboardFrame.size.height - _viewWithBtns.frame.size.height;
 }
 - (void)keyboardHidden:(NSNotification*)notification{
-    _viewHeightConstraint.constant = 0;
+    _viewHeightConstraint.constant = (allImages.count > 0) ? 100 : 0;
 }
 
 
@@ -125,23 +126,20 @@
     [photoAlert addAction:btnCamera];
     [photoAlert addAction:btnCancel];
     
-    photoAlert.popoverPresentationController.sourceView = self.view;
-    [self.navigationController presentViewController:photoAlert animated:YES completion:nil];
+    photoAlert.popoverPresentationController.sourceView = _btnPhoto;
+    photoAlert.popoverPresentationController.sourceRect = _btnPhoto.bounds;
+    [self presentViewController:photoAlert animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary*)info{
     UIImage* image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSString* url = [info objectForKey:UIImagePickerControllerReferenceURL];
-    url = @"1";
-    
     [self saveNote];
     
-    [sharedModel addImage:@{@"image" : image, @"url" : url} toNote:selectedNote];
+    [sharedModel addImage:image toNote:selectedNote];
     _viewHeightConstraint.constant = 100;
     
     [allImages addObject:image];
     [scrollImage showImages:allImages];
-    
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

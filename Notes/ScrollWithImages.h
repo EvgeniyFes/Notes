@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ScrollWithImagesDelegate <NSObject>
+@protocol ScrollImagesDelegate <NSObject>
 
 - (void)removeImageWithIndex:(NSInteger)index;
 
@@ -16,7 +16,7 @@
 
 @interface ScrollWithImages : UIScrollView
 
-@property (weak, nonatomic) id<ScrollWithImagesDelegate> delegate;
+@property (weak, nonatomic) id<ScrollImagesDelegate> delegate;
 - (ScrollWithImages*)showImages:(NSArray*)images;
 
 @end
